@@ -9,14 +9,7 @@ Created on Thu Jul 11 17:09:42 2024
 import os
 import file_modifier_tester as fmt
 
-sim_dir = os.getcwd()
 
-#Print current working directory
-print("Current directory:" , os.getcwd())
-
-file_list = os.listdir(sim_dir)
-
-print(file_list)
 
 
 
@@ -25,6 +18,28 @@ envir_name = os.environ['OS']
 print(envir_name)
 
 """
+
+
+def find_dir():
+    
+    sim_dir = os.getcwd()
+
+    #Print current working directory
+    print("Current directory:" , os.getcwd())
+    
+    return sim_dir
+
+
+
+def find_files(sim_dir):
+    
+    
+    file_list = os.listdir(sim_dir)
+    
+    print(file_list)
+    
+    return file_list
+
 
 
 def sep_plot(case_loc, sep_type):
@@ -134,20 +149,105 @@ def multi_run(sim_dir, file_list, scenario_type):
                     
                     fmt.batch_modifier(batch_loc = batch_loc, fname = fname, 
                                    case_loc = case_loc, idchange = True)
+            
+            elif scenario_type == 'change_b2mn':
+                
+                os.chdir(case_loc)
+                
+                fmt.b2mn_modifier(b2mn_loc = b2mn_loc, case_loc = case_loc, 
+                                  run_type = 'longrun')
+            
+            elif scenario_type == 'longrun':
+                
+                os.chdir(case_loc)
+                
+                fmt.b2mn_modifier(b2mn_loc = b2mn_loc, case_loc = case_loc, 
+                                  run_type = 'longrun')
+                
+                
+                os.system('cp b2fstate b2fstati')
+                os.system('rm b2mn.prt')
+                os.system('qsub batch_example')
                 
             
             elif scenario_type == 'more to discover':
                 pass
 
+
+def change_multi(sim_dir, file_list, scenario_type):
+    
+    for fname in file_list:
+        
+        if fname != 'baserun':
+            
+            case_loc = '{}/{}'.format(sim_dir, fname)
+            b2mn_loc = '{}/{}'.format(case_loc, 'b2mn.dat')
+            batch_loc = '{}/{}'.format(case_loc, 'batch_example')
+            
+            if scenario_type == 'ioutrun':
+                
+                os.chdir(case_loc)
+                
+                fmt.b2mn_modifier(b2mn_loc = b2mn_loc, case_loc = case_loc, 
+                                  run_type = 'ioutrun')
+                
+                
+                os.system('cp b2fstate b2fstati')
+                os.system('rm b2mn.prt')
+                os.system('qsub batch_example')
+            
+            elif scenario_type == 'create file':
+                
+                gen = 'test_folder'
+                
+                multifile_creater(gen_folder = gen)
+                
+            
+            
+            if scenario_type == 'change_b2mn':
+                
+                os.chdir(case_loc)
+                
+                fmt.b2mn_modifier(b2mn_loc = b2mn_loc, case_loc = case_loc, 
+                                  run_type = 'longrun')
+            
+            elif scenario_type == 'change batch':
+                
+                tk = fname.split('_')[-1]
+                
+                if tk == 'tttest':
+                    
+                    fmt.batch_modifier(batch_loc = batch_loc, fname = fname, 
+                                   case_loc = case_loc, idchange = True)
+            
+            
+            
+            elif scenario_type == 'more to discover':
+                pass
+
+
+
+
+
+
+
+
+
 test = 'run'
 
 if test == 'plot':
+    
+    sim_dir = find_dir()
+    file_list = find_files(sim_dir= sim_dir)
     
     multi_plot(sim_dir = sim_dir, file_list = file_list, scenario_type = 'plot_last10')
     
 elif test == 'run':
     
-    multi_run(sim_dir = sim_dir, file_list = file_list, scenario_type = 'change batch')
+    sim_dir = find_dir()
+    file_list = find_files(sim_dir= sim_dir)
+    
+    multi_run(sim_dir = sim_dir, file_list = file_list, scenario_type = 'longrun')
     
 
 
