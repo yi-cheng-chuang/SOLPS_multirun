@@ -186,13 +186,13 @@ def batch_modifier(batch_loc, fname, case_loc, idchange):
 
 
 
-def SN_b2boundary_modifier(b2boundary_loc, case_loc):
+def SN_b2boundary_modifier(b2boundary_loc, case_loc, bound_list):
     
     with open(b2boundary_loc) as f:
          lines = f.readlines()
     
     
-    key_list = ['bcene', 'bceni', 'enepar', 'enipar', 'bccon', 'conpar']
+    key_list = ['bcene', 'bceni', 'enepar', 'enipar(1,1)', 'bccon(0,1)', 'conpar(0,1,1)']
     
     index_dic = {}
     
@@ -206,23 +206,102 @@ def SN_b2boundary_modifier(b2boundary_loc, case_loc):
     
     print(index_dic)
     
+    def substitute_bondpos(lines, index_dic, keys, sub_pos, sub_str):
+    
+        k1 = index_dic[keys]
+        listsp = lines[k1].split()
+        print('{} line split is:'.format(ki))
+        print(listsp)
+        listsp[sub_pos] = sub_str
+        writelist = ''.join(' '+ x + ' ' for x in listsp)
+        lines[k1] = writelist + "\n"
+        print('{} core boundary is currently {}'.format(keys, sub_str))
+    
+    
+    def writelist_attempt(keys, listsp):
+        
+        if keys == 'enepar' or keys == 'enipar(1,1)':
+            writelist = ''.join(' ' + '{}'.format(listsp[0]) + ' ' + '{}'.format(listsp[1]) 
+         + '  ' + '{}'.format(listsp[2]) + '    ' + '{}'.format(listsp[3]) + '  ' 
+         + '{}'.format(listsp[4]) + '    ' + '{}'.format(listsp[5]))
+        elif keys == 'conpar(0,1,1)':
+            writelist = ''.join(' ' + '{}'.format(listsp[0]) + '  ' + '{}'.format(listsp[1]) + '    ' 
+                + '{}'.format(listsp[2]) + ' ' + '{}'.format(listsp[3]))
+        else:
+            print('keys!!')
+        
+        return writelist
+    
+    
+    
+    
+    def substitute_bondvalue(lines, index_dic, keys, sub_pos, sub_val, sub_pw):
+    
+        k1 = index_dic[keys]
+        listsp = lines[k1].split()
+        print('{} line split is:'.format(ki))
+        print(listsp)
+        sep_list = listsp[sub_pos].split('E')
+        print('{} value split is:'.format(ki))
+        print(sep_list)
+        joint = ''.join('{}'.format(sub_val) + 'E'+ '{}'.format(sub_pw) + ',')
+        print(joint)
+        listsp[sub_pos] = joint
+        
+        # writelist = ''.join(' '+ x + ' ' for x in listsp)
+        
+        writelist = writelist_attempt(keys = keys, listsp = listsp)
+        # print(adj_writelist)
+        
+        
+        lines[k1] = writelist + "\n"
+        print('{} core boundary is currently {}'.format(keys, joint))
     
     for ki in key_list:
         
-    
-        Li = index_dic[ki]
+        if ki == 'bcene':
+            substitute_bondpos(lines = lines, index_dic = index_dic, keys = ki, 
+                       sub_pos = 1, sub_str = '5,')
         
-        listsp = lines[Li].split()
+        elif ki == 'bceni':
+            substitute_bondpos(lines = lines, index_dic = index_dic, keys = ki, 
+                       sub_pos = 1, sub_str = '5,')
         
-        print('{} line split is:'.format(ki))
-        print(listsp)
+        elif ki == 'enepar':
+            substitute_bondvalue(lines = lines, index_dic = index_dic, keys = ki, 
+                       sub_pos = 1, sub_val = '{:.3f}'.format(bound_list[1]), sub_pw = '+04')
+        
+        elif ki == 'enipar(1,1)':
+            
+            substitute_bondvalue(lines = lines, index_dic = index_dic, keys = ki, 
+                       sub_pos = 1, sub_val = '{:.3f}'.format(bound_list[1]), sub_pw = '+04')
+        
+        elif ki == 'bccon(0,1)':
+            substitute_bondpos(lines = lines, index_dic = index_dic, keys = ki, 
+                       sub_pos = 2, sub_str = '5,')
+        
+        elif ki == 'conpar(0,1,1)':
+            substitute_bondvalue(lines = lines, index_dic = index_dic, keys = ki, 
+                       sub_pos = 3, sub_val = '{:.3f}'.format(bound_list[0]), sub_pw = '+19')
+        
+        
+        
+
+        
+
         
     
     
-    
-    # writelist = ''.join(x + ' ' for x in list3)
+    # k1 = index_dic['bcene']
+    # listsp_1 = lines[k1].split()
+    # listsp_1[1] = '5,'
+    # writelist = ''.join(x + ' ' for x in listsp_1)
     # lines[k1] = writelist + "\n"
-    # print('{} is currently {}'.format('#PBS -N', fname))
+    # print('{} is currently {}'.format('bcene core boundary', '5,'))
+    
+    
+    
+    
     
     
     
