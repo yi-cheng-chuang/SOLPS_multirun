@@ -26,6 +26,6 @@ if __name__ == '__main__':
     sim_dir = mr.find_dir()
     file_list = mr.find_files(sim_dir= sim_dir, tail= args.tail)
       
-    mr.create_b2fplasmf_output(sim_dir = sim_dir, file_list = file_list)
+    mr.create_output(sim_dir = sim_dir, file_list = file_list)
     
     # mr.mod_b2mn_and_play(sim_dir = sim_dir, file_list = file_list, run_type = args.runtype)
