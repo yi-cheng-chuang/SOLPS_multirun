@@ -27,7 +27,7 @@ def b2mn_set(run_type):
         b2mn_basicrunvalue_dic = {'b2mndr_ntim': '5', 'b2mndr_dtim': '6.0e-5', 'b2mndr_stim': '-1.0'}
     elif run_type == 'testrun':
         
-        b2mn_basicrunvalue_dic = {'b2mndr_ntim': '800', 'b2mndr_dtim': '6.0e-5', 'b2mndr_stim': '-1.0'}
+        b2mn_basicrunvalue_dic = {'b2mndr_ntim': '500', 'b2mndr_dtim': '6.0e-5', 'b2mndr_stim': '-1.0'}
     
     else:
         print('run_type error')
