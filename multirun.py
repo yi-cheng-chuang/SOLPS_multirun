@@ -97,12 +97,14 @@ def multi_plot_sep(sim_dir, file_list, sep_type):
     
     for fname in file_list:
         
-        if fname != 'baserun':
+        case_loc = '{}/{}'.format(sim_dir, fname)
+        
+        os.chdir(case_loc)
+        os.system('2dt {} &'.format(sep_type))
+        
+
             
-            case_loc = '{}/{}'.format(sim_dir, fname)
             
-            os.chdir(case_loc)
-            os.system('2dt {} &'.format(sep_type))
 
 
 
