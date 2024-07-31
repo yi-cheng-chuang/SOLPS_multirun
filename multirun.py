@@ -261,8 +261,10 @@ def remove_file(file_list):
         os.system('rm -r {}'.format(fname))
         print('{} is removed'.format(fname))
     
+    
+    
 
-def create_b2fplasmf_output(sim_dir, file_list):
+def create_output(sim_dir, file_list):
     
     for fname in file_list:
                  
@@ -270,7 +272,6 @@ def create_b2fplasmf_output(sim_dir, file_list):
             
         os.chdir(case_loc)
         
-        os.system('b2run b2uf')
         os.system('pwd')
         os.system('OutputGen')
         os.system('pwd')
