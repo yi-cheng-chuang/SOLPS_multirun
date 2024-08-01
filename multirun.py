@@ -214,11 +214,15 @@ def mod_b2mn_and_play(sim_dir, file_list, run_type):
             
             case_loc = '{}/{}'.format(sim_dir, fname)
             b2mn_loc = '{}/{}'.format(case_loc, 'b2mn.dat')
+            batch_loc = '{}/{}'.format(case_loc, 'batch_example')
                 
             os.chdir(case_loc)
             
             fm.b2mn_modifier(b2mn_loc = b2mn_loc, case_loc = case_loc, 
                               run_type = run_type)
+            
+            fm.batch_modifier(batch_loc = batch_loc, fname = fname, 
+                           case_loc = case_loc, idchange = True)
             
             os.system('cp b2fstate b2fstati')
             os.system('rm b2mn.prt')
