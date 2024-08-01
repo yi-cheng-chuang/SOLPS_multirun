@@ -268,18 +268,25 @@ def remove_file(file_list):
     
     
 
-def create_output(sim_dir, file_list):
+def create_output(sim_dir, file_list, shot_num):
     
     for fname in file_list:
                  
         case_loc = '{}/{}'.format(sim_dir, fname)
-            
+        
+        atp_num = fname.split('_')[0]
+        print(atp_num)
+        
         os.chdir(case_loc)
         
         os.system('pwd')
         os.system('OutputGen')
+        os.system('{}'.format(shot_num))
+        os.system('{}'.format(atp_num))
         os.system('pwd')
         os.system('EirOutputGen')
+        os.system('{}'.format(shot_num))
+        os.system('{}'.format(atp_num))
     
 
 
