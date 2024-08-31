@@ -103,7 +103,15 @@ def multi_plot_sep(sim_dir, file_list, sep_type):
         os.system('2dt {} &'.format(sep_type))
         
 
-            
+
+def multi_resall(sim_dir, file_list):
+    
+    for fname in file_list:
+        
+        case_loc = '{}/{}'.format(sim_dir, fname)
+        
+        os.chdir(case_loc)
+        os.system('resall_D &')          
             
 
 
