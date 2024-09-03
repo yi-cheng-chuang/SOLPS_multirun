@@ -55,7 +55,18 @@ def last10_plot(case_loc, name_last10):
     os.system('2d_profiles')
     os.system('xyplot < {}.last10 &'.format(name_last10))
     
+
+
+def multi_runjob_copy(sim_dir, file_list):
     
+    for fname in file_list:
+        
+        case_loc = '{}/{}'.format(sim_dir, fname)
+        
+        os.chdir(case_loc)
+        print(case_loc)
+        os.system('cp ../../org_cfluxb_027205/76_n900000_leakbsol_nts5_a/run_job .')
+        print('copy run_job')
     
 
 def multi_plot(sim_dir, file_list, scenario_type):
@@ -167,19 +178,18 @@ def change_batch(sim_dir, file_list, tail):
     
     for fname in file_list:
         
-        if fname != 'baserun':
             
-            case_loc = '{}/{}'.format(sim_dir, fname)
-            # b2mn_loc = '{}/{}'.format(case_loc, 'b2mn.dat')
-            batch_loc = '{}/{}'.format(case_loc, 'batch_example')
+        case_loc = '{}/{}'.format(sim_dir, fname)
+        # b2mn_loc = '{}/{}'.format(case_loc, 'b2mn.dat')
+        batch_loc = '{}/{}'.format(case_loc, 'run_job')
+        
+        # multifile_creater(gen_folder = gen_folder)
+        
+                 
+        if tail in fname:
             
-            # multifile_creater(gen_folder = gen_folder)
-            
-                     
-            if tail in fname:
-                
-                fm.batch_modifier(batch_loc = batch_loc, fname = fname, 
-                               case_loc = case_loc, idchange = True)
+            fm.batch_modifier(batch_loc = batch_loc, fname = fname, 
+                           case_loc = case_loc)
 
 
 def change_b2boundary(sim_dir, file_list, tail):
@@ -222,7 +232,7 @@ def mod_b2mn_and_play(sim_dir, file_list, run_type):
             
             case_loc = '{}/{}'.format(sim_dir, fname)
             b2mn_loc = '{}/{}'.format(case_loc, 'b2mn.dat')
-            batch_loc = '{}/{}'.format(case_loc, 'batch_example')
+            batch_loc = '{}/{}'.format(case_loc, 'run_job')
                 
             os.chdir(case_loc)
             
@@ -230,11 +240,11 @@ def mod_b2mn_and_play(sim_dir, file_list, run_type):
                               run_type = run_type)
             
             fm.batch_modifier(batch_loc = batch_loc, fname = fname, 
-                           case_loc = case_loc, idchange = True)
+                           case_loc = case_loc)
             
             os.system('cp b2fstate b2fstati')
             os.system('rm b2mn.prt')
-            os.system('qsub batch_example')
+            os.system('sbatch run_job')
         
         else:
             pass
