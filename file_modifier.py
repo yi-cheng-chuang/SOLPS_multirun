@@ -88,17 +88,13 @@ def b2mn_modifier(b2mn_loc, case_loc, run_type):
 # b2mn_modifier()        
 
 
-def batch_modifier(batch_loc, fname, case_loc, idchange):
+def batch_modifier(batch_loc, fname, case_loc):
     
     with open(batch_loc) as f:
          lines = f.readlines()
     
-    key_list = ['#PBS -N', 'Initiated', 'cd', 'completed']
+    key_list = ['#SBATCH --job-name', '#SBATCH -t', '#SBATCH --mail-user']
     
-    "idchange list"
-    
-    dev = 'MAST'
-    account_id = 'ychuang'
     email = 'ychuang@wm.edu'
     
     
@@ -114,66 +110,41 @@ def batch_modifier(batch_loc, fname, case_loc, idchange):
     
     print(index_dic)
     
-    k1 = index_dic['#PBS -N']
+    k1 = index_dic['#SBATCH --job-name']
     
-    list3 = lines[k1].split()
-    
-    if idchange == False:
-        list3[2] = '{}_MAST_ychuang'.format(fname)
-    
-    elif idchange == True:
-        
-        list3[2] = '{}_{}_{}'.format(fname, dev, account_id)
-        
-    
-    
-    
-    writelist = ''.join(x + ' ' for x in list3)
-    lines[k1] = writelist + "\n"
-    print('{} is currently {}'.format('#PBS -N', fname))
+    list3 = lines[k1].split('=')
     
 
-    k2 = index_dic['Initiated']
+    list3[1] = '{}'.format(fname)
+        
+  
+    writelist = ''.join(list3[0] + '=' + list3[1])
+    lines[k1] = writelist + "\n"
+    print('{} is currently {}'.format('#SBATCH --job-name', fname))
+    
+
+    k2 = index_dic['#SBATCH -t']
 
     list1 = lines[k2].split()
-    list1[2] = fname
-    
-    if idchange == False:
-        pass
-    elif idchange == True:
-        list1[-1] = email
-        list1[1] = '\"{}'.format(dev)
+    list1[2] = '27:00:00'
     
     print(list1)
     
     
     writelist = ''.join(x + ' ' for x in list1)
     lines[k2] = writelist + "\n"
-    print('{} is currently {}'.format('Initiated', fname))
+    print('{} is currently {}'.format('#SBATCH -t', fname))
            
-    k3 = index_dic['cd']
     
-    writelist = ''.join('cd' + ' ' + case_loc)
-    lines[k3] = writelist + "\n"
-    print('{} is currently {}'.format('cd', fname))
-    
-    k4 = index_dic['completed']
+    k4 = index_dic['#SBATCH --mail-user']
 
-    list2 = lines[k4].split()
-    list2[2] = fname
+    list2 = lines[k4].split('=')
+    list2[1] = email
+       
     
-    if idchange == False:
-        pass
-    elif idchange == True:
-        list2[-1] = email
-        list2[1] = '\"{}'.format(dev)
-    
-    
-    
-    
-    writelist = ''.join(x + ' ' for x in list2)
+    writelist = ''.join('#SBATCH --mail-user' + '=' + list2[1])
     lines[k4] = writelist + "\n"
-    print('{} is currently {}'.format('completed', fname))
+    print('{} is currently {}'.format('#SBATCH --mail-user', email))
     
     with open(batch_loc,'w') as g:
         for i, line in enumerate(lines):         ## STARTS THE NUMBERING FROM 1 (by default it begins with 0)    
