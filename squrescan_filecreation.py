@@ -19,7 +19,7 @@ parser.add_argument('-s','--start', type= int, metavar='',
 args = parser.parse_args()
 
 """
-tail = 
+
 
 """
 
@@ -29,8 +29,8 @@ if __name__ == '__main__':
       
     sim_dir = mr.find_dir()
     
-    denscan_dic = {'start': 5.02, 'stop': 9.02, 'space': 5}
-    tempscan_dic = {'start': 3.73, 'stop': 7.73, 'space': 5}
+    denscan_dic = {'start': 5.512, 'stop': 9.512, 'space': 5}
+    tempscan_dic = {'start': 4.115, 'stop': 8.115, 'space': 5}
     
     mr.sqscancpfile_modboundary(sim_dir = sim_dir, tail = args.tail, copy_folder = args.copy, 
                         start_num = args.start, ds_dic = denscan_dic, ts_dic = tempscan_dic)
