@@ -163,7 +163,7 @@ def SN_b2boundary_modifier(b2boundary_loc, case_loc, bound_list):
          lines = f.readlines()
     
     
-    key_list = ['bcene', 'bceni', 'enepar', 'enipar(1,1)', 'bccon(0,1)', 'conpar(0,1,1)']
+    key_list = ['bcene', 'bceni', 'enepar(1,1)', 'enipar(1,1)', 'bccon(0,1)', 'conpar(0,1,1)']
     
     index_dic = {}
     
@@ -191,7 +191,7 @@ def SN_b2boundary_modifier(b2boundary_loc, case_loc, bound_list):
     
     def writelist_attempt(keys, listsp):
         
-        if keys == 'enepar' or keys == 'enipar(1,1)':
+        if keys == 'enepar(1,1)' or keys == 'enipar(1,1)':
             writelist = ''.join(' ' + '{}'.format(listsp[0]) + ' ' + '{}'.format(listsp[1]) 
          + '  ' + '{}'.format(listsp[2]) + '    ' + '{}'.format(listsp[3]) + '  ' 
          + '{}'.format(listsp[4]) + '    ' + '{}'.format(listsp[5]))
@@ -232,37 +232,45 @@ def SN_b2boundary_modifier(b2boundary_loc, case_loc, bound_list):
         
         if ki == 'bcene':
             substitute_bondpos(lines = lines, index_dic = index_dic, keys = ki, 
-                       sub_pos = 1, sub_str = '5,')
+                       sub_pos = 1, sub_str = '16,')
         
         elif ki == 'bceni':
             substitute_bondpos(lines = lines, index_dic = index_dic, keys = ki, 
-                       sub_pos = 1, sub_str = '5,')
+                       sub_pos = 1, sub_str = '24,')
         
-        elif ki == 'enepar':
+        elif ki == 'enepar(1,1)':
             substitute_bondvalue(lines = lines, index_dic = index_dic, keys = ki, 
-                       sub_pos = 1, sub_val = '{:.3f}'.format(bound_list[1]), sub_pw = '+04')
+                       sub_pos = 1, sub_val = '{:.3f}'.format(bound_list[1]), sub_pw = '+05')
         
         elif ki == 'enipar(1,1)':
             
             substitute_bondvalue(lines = lines, index_dic = index_dic, keys = ki, 
-                       sub_pos = 1, sub_val = '{:.3f}'.format(bound_list[1]), sub_pw = '+04')
+                       sub_pos = 1, sub_val = '{:.3f}'.format(bound_list[1]), sub_pw = '+05')
         
         elif ki == 'bccon(0,1)':
             substitute_bondpos(lines = lines, index_dic = index_dic, keys = ki, 
-                       sub_pos = 2, sub_str = '5,')
+                       sub_pos = 2, sub_str = '22,')
         
         elif ki == 'conpar(0,1,1)':
             substitute_bondvalue(lines = lines, index_dic = index_dic, keys = ki, 
-                       sub_pos = 3, sub_val = '{:.3f}'.format(bound_list[0]), sub_pw = '+19')
-        
-        
+                       sub_pos = 3, sub_val = '{:.3f}'.format(bound_list[0]), sub_pw = '+20')
         
 
-        
 
-        
+    with open(b2boundary_loc,'w') as g:
+        for i, line in enumerate(lines):         ## STARTS THE NUMBERING FROM 1 (by default it begins with 0)    
+            g.writelines(line)
     
+    # f_dir = os.getcwd()
     
+    print('new b2mn is created in {}'.format(case_loc))
+    
+
+
+
+
+"""
+
     # k1 = index_dic['bcene']
     # listsp_1 = lines[k1].split()
     # listsp_1[1] = '5,'
@@ -292,15 +300,9 @@ def SN_b2boundary_modifier(b2boundary_loc, case_loc, bound_list):
 
 
 
-    with open(b2boundary_loc,'w') as g:
-        for i, line in enumerate(lines):         ## STARTS THE NUMBERING FROM 1 (by default it begins with 0)    
-            g.writelines(line)
-    
-    # f_dir = os.getcwd()
-    
-    print('new b2mn is created in {}'.format(case_loc))
-    
-    
+
+
+"""
     
         
         
