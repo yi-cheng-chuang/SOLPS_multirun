@@ -65,9 +65,60 @@ def multi_runjob_copy(sim_dir, file_list):
         
         os.chdir(case_loc)
         print(case_loc)
-        os.system('cp ../../org_cfluxb_027205/76_n900000_leakbsol_nts5_a/run_job .')
+        os.system('cp ../org_std/run_job .')
         print('copy run_job')
+
+
+def multi_boundary_copy(sim_dir, file_list):
     
+    for fname in file_list:
+        
+        case_loc = '{}/{}'.format(sim_dir, fname)
+        
+        os.chdir(case_loc)
+        print(case_loc)
+        os.system('cp ../../org_adjstd_fast/80_nf5.32tf4.11_adjifast_a/b2.boundary.parameters .')
+        print('copy b2.boundary.parameters')
+
+
+def multi_transportinput_copy(sim_dir, file_list):
+    
+    for fname in file_list:
+        
+        case_loc = '{}/{}'.format(sim_dir, fname)
+        
+        os.chdir(case_loc)
+        print(case_loc)
+        os.system('cp ../../org_adjstd_fast/80_nf5.32tf4.11_adjifast_a/b2.transport.inputfile .')
+        print('copy b2.boundary.parameters')
+
+
+
+
+def run_multi_PB2(sim_dir, file_list):
+    
+    for fname in file_list:
+        
+        case_loc = '{}/{}'.format(sim_dir, fname)
+        
+        os.chdir(case_loc)
+        print(case_loc)
+        os.system('python3 ../../../../../repository/stop/PB2.py')
+        print('run PB2 for {}'.format(fname))
+
+
+def run_multi_EB2(sim_dir, file_list):
+    
+    for fname in file_list:
+        
+        case_loc = '{}/{}'.format(sim_dir, fname)
+        
+        os.chdir(case_loc)
+        print(case_loc)
+        os.system('python3 ../../../../../repository/stop/EB2.py')
+        print('run EB2 for {}'.format(fname))
+
+
 
 def multi_plot(sim_dir, file_list, scenario_type):
     
@@ -147,7 +198,7 @@ def squrescan_filecreater(gen_folder, tail, shotnum_st, denscan_list, tempscan_l
         
         for tem in tempscan_list:
         
-            new_folder = '{}_nf{:.2f}tf{:.2f}_{}'.format(shotnum_st, den, tem, tail)
+            new_folder = '{}_nf{:.3f}tf{:.3f}_{}'.format(shotnum_st, den, tem, tail)
             
             os.system('cp -r {} {}'.format(gen_folder, new_folder))
             
