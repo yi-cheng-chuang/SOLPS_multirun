@@ -337,7 +337,7 @@ def remove_file(file_list):
     
     
 
-def create_output(sim_dir, file_list, shot_num):
+def create_output(sim_dir, file_list):
     
     for fname in file_list:
                  
@@ -350,12 +350,12 @@ def create_output(sim_dir, file_list, shot_num):
         
         os.system('pwd')
         os.system('OutputGen')
-        os.system('{}'.format(shot_num))
-        os.system('{}'.format(atp_num))
+        # os.system('{}'.format(shot_num))
+        # os.system('{}'.format(atp_num))
         os.system('pwd')
         os.system('EirOutputGen')
-        os.system('{}'.format(shot_num))
-        os.system('{}'.format(atp_num))
+        # os.system('{}'.format(shot_num))
+        # os.system('{}'.format(atp_num))
     
 
 
