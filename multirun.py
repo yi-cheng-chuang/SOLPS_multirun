@@ -77,7 +77,7 @@ def multi_boundary_copy(sim_dir, file_list):
         
         os.chdir(case_loc)
         print(case_loc)
-        os.system('cp ../../org_adjstd_fast/80_nf5.32tf4.11_adjifast_a/b2.boundary.parameters .')
+        os.system('cp ../org_std/b2.boundary.parameters .')
         print('copy b2.boundary.parameters')
 
 
@@ -89,7 +89,7 @@ def multi_transportinput_copy(sim_dir, file_list):
         
         os.chdir(case_loc)
         print(case_loc)
-        os.system('cp ../../org_adjstd_fast/80_nf5.32tf4.11_adjifast_a/b2.transport.inputfile .')
+        os.system('cp ../org_std/b2.transport.inputfile .')
         print('copy b2.boundary.parameters')
 
 
