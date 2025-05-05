@@ -360,6 +360,15 @@ def create_output(sim_dir, file_list):
 
 
 
+def multi_ioutrun(sim_dir, file_list):
+    
+    for fname in file_list:
+        
+        case_loc = '{}/{}'.format(sim_dir, fname)
+        
+        os.chdir(case_loc)
+        os.system('b2run b2mn > run.log')
+
 
 """
 
