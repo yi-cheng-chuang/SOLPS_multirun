@@ -21,14 +21,15 @@ def b2mn_set(run_type):
     b2mn_basicrunflag_dic = {'b2mndr_ntim': True, 'b2mndr_dtim': True, 'b2mndr_stim': True}
     if run_type == 'longrun':
         
-        b2mn_basicrunvalue_dic = {'b2mndr_ntim': '1601', 'b2mndr_dtim': '8.0e-5', 'b2mndr_stim': '-1.0'}
+        b2mn_basicrunvalue_dic = {'b2mndr_ntim': '1000', 'b2mndr_dtim': '1.0e-5', 'b2mndr_stim': '0.0'}
     elif run_type == 'ioutrun':
         
         b2mn_basicrunvalue_dic = {'b2mndr_ntim': '7', 'b2mndr_dtim': '6.0e-5', 'b2mndr_stim': '-1.0'}
     elif run_type == 'testrun':
         
         
-        b2mn_basicrunvalue_dic = {'b2mndr_ntim': '20', 'b2mndr_dtim': '6.0e-5', 'b2mndr_stim': '-1.0'}
+        b2mn_basicrunvalue_dic = {'b2mndr_ntim': '20', 'b2mndr_dtim': '4.0e-5', 'b2mndr_stim': '0.0'}
+    
 
     
     else:
